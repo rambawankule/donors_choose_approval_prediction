@@ -1,4 +1,5 @@
 # DonorsChoose Project
+<img width="800" height="200" alt="image" src="https://github.com/user-attachments/assets/b417c5ca-f789-440c-a6a3-eef767583010" />
 
 This project is a web application and API for predicting the success of DonorsChoose.org classroom project proposals. It includes a Flask backend, a user interface, and a Jupyter notebook for data analysis and model development.
 
@@ -8,7 +9,6 @@ This project is a web application and API for predicting the success of DonorsCh
 - Pre-trained machine learning models (XGBoost, SVM, Logistic Regression, Decision Tree)
 - Data preprocessing and feature engineering
 - Jupyter notebook for exploratory data analysis and model training
-- Table of Contents extension support for Jupyter notebooks
 
 ## Project Structure
 ```
@@ -21,7 +21,6 @@ donorschoose_api/             # API and model files
   static/                     # Static files (CSS, images)
   templates/                  # HTML templates
 model/                        # Additional model files
-Raw Data/                     # Raw CSV data files
 templates/                    # HTML templates
 ```
 
@@ -31,25 +30,15 @@ templates/                    # HTML templates
    ```
    pip install -r requirements.txt
    ```
-3. (Optional) Enable Jupyter notebook Table of Contents extension:
-   ```
-   jupyter contrib nbextension install --user
-   jupyter nbextension enable toc2/main
-   ```
-4. Run the Flask API:
+3. Run the Flask API:
    ```
    python app.py
    ```
-5. Run the Web UI:
+4. Run the Web UI:
    ```
    python ui.py
    ```
-6. Open and explore the Jupyter notebook `DonorChoose_org.ipynb` for data analysis and modeling.
-
-## Notes
-- Place your model and transformer `.pkl` files in the appropriate `models/` or `model/` folders.
-- Raw data files should be placed in the `Raw Data/` directory.
-- The web UI communicates with the API for predictions.
+5. Open and explore the Jupyter notebook `DonorChoose_org.ipynb` for data analysis and modeling.
 
 ## License
 This project is for educational purposes.
