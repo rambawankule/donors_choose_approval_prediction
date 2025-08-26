@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DonorsChoose Approval Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-sm navbar-dark navbar-glass py-3">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="DonorsChoose" class="site-logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item me-2">
+            <button class="btn btn-json" data-bs-toggle="modal" data-bs-target="#jsonModal">
+              <i class="fa-solid fa-file-import"></i> Fill with JSON
+            </button>
+          </li>
+          <li class="nav-item"><a class="btn btn-light" href="#">Docs</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="py-5 bg-hero">
+    <div class="container text-center text-white">
+      <h1 class="display-6 fw-bold">Predict project approval with confidence</h1>
+      <p class="lead">A simple interface to estimate DonorsChoose.org project approval — fast, explainable, and styled for clarity.</p>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container my-5">
+    <div class="row g-4">
+      
+      <!-- Form Section -->
+      <div class="col-lg-7">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h4 class="card-title mb-3">Project details</h4>
+            <form id="predictForm">
+
+              <!-- Basic Info -->
+              <h6 class="form-section-title">Basic Info</h6>
+              <div class="mb-3">
+                <label class="form-label small required">Teacher Prefix</label>
+                <select name="teacher_prefix" class="form-control form-control-sm" required>
+                  <option value="">Select</option>
+                  <option>Mr.</option>
+                  <option>Mrs.</option>
+                  <option>Ms.</option>
+                  <option>Dr.</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">School State</label>
+                <input type="text" name="school_state" class="form-control form-control-sm" placeholder="e.g., CA, TX, NY" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Submitted At</label>
+                <input type="datetime-local" name="project_submitted_datetime" class="form-control form-control-sm" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Grade Category</label>
+                <input type="text" name="project_grade_category" class="form-control form-control-sm" placeholder="e.g., Elementary, High School" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Previously Posted Projects</label>
+                <input type="number" name="teacher_number_of_previously_posted_projects" class="form-control form-control-sm" min="0" step="1" placeholder="e.g., 2" required>
+              </div>
+
+              <!-- Project Details -->
+              <h6 class="form-section-title">Project Details</h6>
+              <div class="mb-3">
+                <label class="form-label small required">Project Title</label>
+                <input type="text" name="project_title" class="form-control form-control-sm" placeholder="Enter project title" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Subject Categories</label>
+                <input type="text" name="project_subject_categories" class="form-control form-control-sm" placeholder="e.g., Math, Science" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Subject Subcategories</label>
+                <input type="text" name="project_subject_subcategories" class="form-control form-control-sm" placeholder="e.g., Algebra, Physics" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Resource Summary</label>
+                <textarea name="project_resource_summary" class="form-control form-control-sm" rows="2" placeholder="Short summary of resources" required></textarea>
+              </div>
+
+              <!-- Essays -->
+              <h6 class="form-section-title">Essays</h6>
+              <div class="mb-3">
+                <label class="form-label small required">Essay 1</label>
+                <textarea name="project_essay_1" class="form-control form-control-sm" rows="3" placeholder="Explain your project need" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small required">Essay 2</label>
+                <textarea name="project_essay_2" class="form-control form-control-sm" rows="3" placeholder="Why this project matters" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small">Essay 3 (optional)</label>
+                <textarea name="project_essay_3" class="form-control form-control-sm" rows="2" placeholder="Optional essay"></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label small">Essay 4 (optional)</label>
+                <textarea name="project_essay_4" class="form-control form-control-sm" rows="2" placeholder="Optional essay"></textarea>
+              </div>
+
+              <!-- Resources -->
+              <h6 class="form-section-title">Resources</h6>
+              <div id="resources"></div>
+              <div class="d-flex gap-2 mt-3 justify-content-between">
+                <button type="button" id="addResource" class="btn btn-outline-primary btn-sm">
+                  <i class="fa-solid fa-plus"></i> Add Resource
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa-solid fa-bolt"></i> Get Prediction
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm sticky-card">
+          <div class="card-body">
+            <h5 class="card-title">Quick preview</h5>
+            <p class="text-muted small">The preview shows the most important fields and the prediction result.</p>
+
+            <div class="preview-box mb-3" id="previewBox">
+              <p class="mb-1"><strong>Title:</strong> <span id="p_title">—</span></p>
+              <p class="mb-1"><strong>State:</strong> <span id="p_state">—</span></p>
+              <p class="mb-1"><strong>Grade:</strong> <span id="p_grade">—</span></p>
+              <p class="mb-1"><strong>Resources:</strong> <span id="p_resources">0 items</span></p>
+            </div>
+
+            <div id="result" class="mb-3"></div>
+            <div class="text-muted small">Tip: use the <em>Fill with JSON</em> button to paste an example project payload.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- JSON Modal -->
+  <div class="modal fade" id="jsonModal" tabindex="-1" aria-labelledby="jsonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="jsonModalLabel">Paste JSON Data</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <textarea id="jsonInput" class="form-control" rows="10" placeholder='{"teacher_prefix": "Mr.", "school_state": "CA", ...}'></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="fillJsonBtn">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    let resourceIndex = 0;
+
+    function updatePreview(){
+      $('#p_title').text($('[name="project_title"]').val() || '\u2014');
+      $('#p_state').text($('[name="school_state"]').val() || '\u2014');
+      $('#p_grade').text($('[name="project_grade_category"]').val() || '\u2014');
+      const resourcesCount = $('.resource-item').length;
+      $('#p_resources').text(resourcesCount + ' item' + (resourcesCount !== 1 ? 's' : ''));
+    }
+
+    $(document).on('input change', '#predictForm', updatePreview);
+
+    $("#addResource").on("click", function(){
+      $("#resources").append(`
+        <div class="row mb-2 resource-item">
+          <div class="col-6">
+            <input type="text" class="form-control form-control-sm" name="resource_desc_${resourceIndex}" placeholder="Description" required>
+          </div>
+          <div class="col-3">
+            <input type="number" class="form-control form-control-sm" name="resource_qty_${resourceIndex}" placeholder="Qty" required>
+          </div>
+          <div class="col-3">
+            <input type="number" class="form-control form-control-sm" name="resource_price_${resourceIndex}" placeholder="Price" step="0.01" required>
+          </div>
+        </div>`);
+      resourceIndex++;
+      updatePreview();
+    });
+
+    $("#predictForm").on("submit", function(e){
+      e.preventDefault();
+      const $btn = $(this).find('button[type=submit]');
+      $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Predicting...');
+
+      $.post("/predict_ui", $(this).serialize(), function(data){
+        $btn.prop('disabled', false).html('<i class="fa-solid fa-bolt"></i> Get Prediction');
+        if(data.error){
+          $("#result").html(`<div class='alert alert-danger'>${data.error}</div>`);
+        } else {
+          const conf = (data.confidence_score*100).toFixed(1);
+          const approved = data.predicted_approval === 'Approved';
+          const barClass = approved ? 'bg-success' : 'bg-danger';
+          const textColor = approved ? 'text-success' : 'text-danger';
+          $("#result").html(`
+            <div class='result-card p-3'>
+              <div class='d-flex justify-content-between align-items-center mb-2'>
+                <div><strong>Prediction</strong></div>
+                <div class='${textColor} fw-bold'>${data.predicted_approval}</div>
+              </div>
+              <div class='mb-2 small text-muted'>Confidence</div>
+              <div class='progress' style='height:18px'>
+                <div class='progress-bar ${barClass}' role='progressbar' style='width: ${conf}%'>${conf}%</div>
+              </div>
+            </div>
+          `);
+          // Scroll smoothly to the result area
+          document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // Brief highlight effect
+          $("#result").addClass("highlight");
+          setTimeout(() => $("#result").removeClass("highlight"), 1500);
+        }
+      }).fail(function(xhr){
+        $btn.prop('disabled', false).html('<i class="fa-solid fa-bolt"></i> Get Prediction');
+        $("#result").html(`<div class='alert alert-danger'>Request failed: ${xhr.statusText || xhr.status}</div>`);
+      });
+    });
+
+    $("#fillJsonBtn").on("click", function () {
+      try {
+        const jsonData = JSON.parse($("#jsonInput").val());
+        for (const key in jsonData) {
+          if (key === "resources") continue;
+          const field = $(`[name="${key}"]`);
+          if (field.length) field.val(jsonData[key]);
+        }
+        if (Array.isArray(jsonData.resources)) {
+          $("#resources").empty();
+          resourceIndex = 0;
+          jsonData.resources.forEach(resource => {
+            $("#resources").append(`
+              <div class="row mb-2 resource-item">
+                <div class="col-6">
+                  <input type="text" class="form-control form-control-sm" name="resource_desc_${resourceIndex}" placeholder="Description" value="${resource.description || ''}" required>
+                </div>
+                <div class="col-3">
+                  <input type="number" class="form-control form-control-sm" name="resource_qty_${resourceIndex}" placeholder="Qty" value="${resource.quantity || 0}" required>
+                </div>
+                <div class="col-3">
+                  <input type="number" class="form-control form-control-sm" name="resource_price_${resourceIndex}" placeholder="Price" step="0.01" value="${resource.price || 0}" required>
+                </div>
+              </div>
+            `);
+            resourceIndex++;
+          });
+        }
+        updatePreview();
+        bootstrap.Modal.getInstance(document.getElementById("jsonModal")).hide();
+      } catch (err) {
+        alert("Invalid JSON format. Please check your input.");
+      }
+    });
+  </script>
+</body>
+</html>

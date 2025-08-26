@@ -1,0 +1,15 @@
+```pip-requirements
+
+```
+flask
+requests
+pandas
+scikit-learn
+xgboost
+jupyter
+notebook
+ipykernel
+matplotlib
+numpy
+scipy
+seaborn

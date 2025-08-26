@@ -1,0 +1,285 @@
+/* DonorsChoose-inspired Refined UI Styling */
+:root {
+  /* Colors */
+  --dc-purple: #6f42c1;
+  --dc-blue: #2b8cff;
+  --dc-accent: #ff9f1c;
+  --dc-bg: #fdfdfd;
+  --dc-gray: #6b7280;
+
+  /* Fonts */
+  --font-primary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+
+  /* Border Radius */
+  --border-radius-md: 6px;
+
+  /* Box Shadow */
+  --box-shadow-sm: 0 2px 6px rgba(0,0,0,0.03);
+  --box-shadow-md: 0 6px 16px rgba(0,0,0,0.06);
+  --box-shadow-lg: 0 10px 22px rgba(0,0,0,0.15);
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-primary);
+  background: var(--dc-bg);
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--dc-blue);
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+}
+a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: var(--dc-blue);
+  transition: width 0.2s ease;
+}
+a:hover::after { width: 100%; }
+a:hover { color: var(--dc-purple); }
+
+/* Navbar */
+.navbar-glass {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-bottom: 1px solid #f0f0f0;
+}
+.navbar-brand {
+  color: var(--dc-purple);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 0;
+}
+.navbar .btn-primary {
+  background: var(--dc-accent);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  color: #fff;
+}
+.site-logo{height:34px;display:block}
+
+/* Hero Section */
+.bg-hero {
+  background: linear-gradient(135deg, var(--dc-purple), var(--dc-blue));
+  padding: 3.5rem 2rem;
+  border-radius: 0;
+  margin-bottom: 2rem;
+}
+.bg-hero .display-4 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+.bg-hero .lead {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.95);
+}
+.bg-hero .btn {
+  margin-top: 1rem;
+  background: var(--dc-accent);
+  border-radius: var(--border-radius-md);
+  padding: .75rem 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+.bg-hero .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-lg);
+}
+
+/* Cards */
+.card, .preview-box, .result-card {
+  border-radius: var(--border-radius-md);
+  border: 1px solid #e5e7eb;
+  box-shadow: var(--box-shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-md);
+}
+.card-body { padding: 1.25rem 1.5rem; }
+.card-title { font-weight: 700; font-size: 1.1rem; color: #0b1220; }
+
+/* Progress bars */
+.progress {
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(15,23,42,0.06);
+}
+.progress-bar {
+  background: var(--dc-accent);
+  transition: width .6s ease;
+}
+
+/* Forms */
+.form-control {
+  border-radius: var(--border-radius-md);
+  border: 1px solid #d1d5db;
+  padding: .55rem .7rem;
+  font-size: 0.95rem;
+  box-shadow: none;
+}
+.form-control:focus {
+  box-shadow: 0 6px 18px rgba(43,140,255,0.12);
+  border-color: rgba(43,140,255,0.9);
+}
+textarea.form-control { min-height: 56px; }
+.form-label.small { font-size: 0.85rem; color: #374151; }
+
+/* Use a more specific selector for navbar buttons to override Bootstrap
+  styles without needing '!important'.
+*/
+.navbar .nav-item .btn-json {
+  background: rgba(43,140,255,0.08);
+  color: var(--dc-blue);
+  border: 1px solid rgba(43,140,255,0.12);
+  border-radius: var(--border-radius-md);
+  padding: .42rem .9rem;
+  font-weight: 600;
+}
+.navbar .nav-item .btn-json:hover {
+  background: rgba(43,140,255,0.14);
+}
+
+.navbar .nav-item .btn-outline-light {
+  background: transparent;
+  color: var(--dc-blue);
+  border: 1px solid rgba(15,23,42,0.06);
+  padding: .34rem .6rem;
+  border-radius: var(--border-radius-md);
+}
+.navbar .nav-item .btn-outline-light .fa{ margin-right: .35rem }
+.navbar .nav-item .btn-outline-light:hover, 
+.navbar .nav-item .btn-outline-light:focus {
+  background: rgba(43,140,255,0.06);
+  box-shadow: 0 6px 14px rgba(43,140,255,0.04);
+}
+
+/* Quick Preview */
+.preview-box {
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+}
+
+/* Utilities: By loading this stylesheet after Bootstrap's, these rules
+  will win without needing '!important' due to the cascade.
+*/
+.text-success { color: #16a34a; }
+.text-danger { color: #ef4444; }
+.text-muted { color: var(--dc-gray); }
+.small { font-size: 0.85rem; }
+
+/* Responsive */
+@media (max-width: 991px){
+  .bg-hero { padding: 2.5rem 1rem; border-radius: 0; }
+  .sticky-card { position: static; }
+}
+
+/* Highlight animation for result */
+.highlight {
+  animation: flash-bg 1.2s ease-in-out;
+}
+@keyframes flash-bg {
+  0%   { background-color: #fff3cd; }
+  50%  { background-color: #ffeeba; }
+  100% { background-color: transparent; }
+}
+
+
+/* Highlight JSON button */
+.navbar .nav-item .btn-json {
+  background: var(--dc-blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: .42rem 1rem;
+  font-weight: 600;
+  box-shadow: var(--box-shadow-sm);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.navbar .nav-item .btn-json:hover {
+  background: #1a6edc;
+  transform: translateY(-2px);
+}
+
+/* Form labels with required asterisk */
+.form-label.required::after {
+  content: " *";
+  color: var(--dc-accent);
+  font-weight: bold;
+}
+
+/* Preview Box Styling */
+.preview-box {
+  background: #fff;
+  padding: 1rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-md);
+}
+.preview-box p {
+  font-size: 0.9rem;
+}
+
+
+/* Limit form width for readability */
+#predictForm {
+  max-width: 600px;
+}
+
+/* Section headings */
+.form-section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dc-gray);
+  text-transform: uppercase;
+  margin: 1rem 0 0.5rem;
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom: 0.25rem;
+}
+
+/* Primary CTA (Get Prediction) */
+#predictForm .btn-primary {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* Quick preview box improvements */
+.preview-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+/* Preview labels */
+.preview-box strong {
+  color: #374151;
+}
+
+/* Responsive: stack preview below form */
+@media (max-width: 991px) {
+  #predictForm {
+    max-width: 100%;
+  }
+  .sticky-card {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
