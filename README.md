@@ -154,17 +154,17 @@ end
 
 ```
 donorschoose/
-├── app.py                  # Flask API backend
-├── ui.py                   # Web UI
-├── requirements.txt        # Dependencies
-├── donorschoose_api/       # API & model files
-│   ├── models/             # Pre-trained ML models (.pkl)
-│   ├── static/             # CSS, images
-│   └── templates/          # HTML templates
-├── model/                  # Additional models
-├── notebooks/              # Jupyter notebooks
-│   └── DonorChoose_org.ipynb
-└── docs/                   # Documentation assets (screenshots, diagrams)
+├── app.py                       # Flask API backend
+├── ui.py                        # Web UI
+├── requirements.txt             # Dependencies
+├── donorschoose_api/            # API & model files
+│   ├── models/                  # Pre-trained ML models (.pkl)
+│   ├── static/                  # CSS, images
+│   └── templates/               # HTML templates
+├── model/                       # Additional models
+├── notebooks/                   # Jupyter notebooks
+│   └── DonorChoose_org.ipynb     
+└── docs/                        # Documentation assets (screenshots, diagrams)
 ```
 
 ---
