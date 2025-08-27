@@ -1,7 +1,5 @@
 # 📘 DonorsChoose Project Success Predictor
 
-<img width="800" height="200" alt="image" src="https://github.com/user-attachments/assets/b417c5ca-f789-440c-a6a3-eef767583010" />
-
 A Flask web app + REST API that predicts the likelihood of classroom project approval on **[DonorsChoose.org](https://www.donorschoose.org/)** using machine learning models.
 
 ---
