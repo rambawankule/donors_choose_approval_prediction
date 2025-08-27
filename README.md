@@ -215,9 +215,10 @@ donors_choose_approval_prediction/
 
 ---
 
-## 📜 License
+## 📜 License  
 
-This project is for **educational purposes only**.
+This project is licensed under the [MIT License](LICENSE).  
+
 
 
 
