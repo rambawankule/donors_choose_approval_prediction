@@ -1,4 +1,4 @@
-# 📘 DonorsChoose Project Success Predictor
+# 🔰 **DonorsChoose Project Success Predictor**
 
 A Flask web app + REST API that predicts the likelihood of classroom project approval on **[DonorsChoose.org](https://www.donorschoose.org/)** using machine learning models.
 
@@ -153,18 +153,14 @@ end
 ## 📂 Project Structure
 
 ```
-donorschoose/
-├── app.py                       # Flask API backend
-├── ui.py                        # Web UI
-├── requirements.txt             # Dependencies
-├── donorschoose_api/            # API & model files
-│   ├── models/                  # Pre-trained ML models (.pkl)
-│   ├── static/                  # CSS, images
-│   └── templates/               # HTML templates
-├── model/                       # Additional models
-├── notebooks/                   # Jupyter notebooks
-│   └── DonorChoose_org.ipynb     
-└── docs/                        # Documentation assets (screenshots, diagrams)
+donors_choose_approval_prediction/
+├── models/                                # Pre-trained ML models (.pkl)
+├── static/                                # CSS, images
+├── templates/                             # HTML templates
+└── DonorsChoose_EDA_and_Modeling.ipynb    # EDA & Modeling
+├── app.py                                 # Flask API backend
+├── requirements.txt                       # Dependencies
+└── ui.py                                  # Web UI
 ```
 
 ---
@@ -222,7 +218,6 @@ donorschoose/
 ## 📜 License
 
 This project is for **educational purposes only**.
-(👉 Consider adding a formal license like MIT/Apache-2.0 in a `LICENSE` file.)
 
 
 
