@@ -10,7 +10,7 @@ A Flask web app + REST API that predicts the likelihood of classroom project app
 
 Submit project details and instantly get a prediction.
 
-<img width="1903" height="955" alt="image" src="https://github.com/user-attachments/assets/c127fa34-9b87-48e6-8de7-7c91aaeed31b" />
+[<img width="1903" height="955" alt="image" src="https://github.com/user-attachments/assets/c127fa34-9b87-48e6-8de7-7c91aaeed31b" />](https://www.loom.com/share/f655bb1fd82c4ce9abfc69fbb079ea66?sid=8f8db639-aad3-4a11-82f1-b4a3f18edfe2)
 
 
 ### API Example
